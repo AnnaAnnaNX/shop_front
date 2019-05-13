@@ -1,8 +1,10 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import { connectRouter, routerMiddleware } from 'connected-react-router'
 import thunk from 'redux-thunk'
+import createSagaMiddleware from 'redux-saga'
 import createHistory from 'history/createBrowserHistory'
 import rootReducer from './modules'
+import { helloSaga } from './sagas'
 
 export const history = createHistory()
 
@@ -23,8 +25,15 @@ const composedEnhancers = compose(
   ...enhancers
 )
 
-export default createStore(
+const sagaMiddleware = createSagaMiddleware()
+let store =  createStore(
   connectRouter(history)(rootReducer),
   initialState,
+  applyMiddleware(sagaMiddleware),
   composedEnhancers
 )
+sagaMiddleware.run(helloSaga)
+
+const action = type => store.dispatch({type})
+
+export default store
