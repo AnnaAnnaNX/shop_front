@@ -38,6 +38,10 @@ export const setProducts = (value) => ({
   payload: value
 })
 
+export const setPathes = (value) => ({
+  type: 'SET_PATHES',
+  payload: value
+})
 
 // sagas
 
@@ -54,4 +58,8 @@ export const fetchProduct = (id) => ({
 export const fetchProductsByGroupId = (id) => ({
   type: 'FETCH_PRODUCTS_BY_GROUPID',
   id: id
+})
+
+export const getPathes = () => ({
+  type: 'GET_PATHES'
 })

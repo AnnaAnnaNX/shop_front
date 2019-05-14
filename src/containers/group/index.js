@@ -12,6 +12,7 @@ import {
   decrement,
   decrementAsync
 } from '../../modules/counter'
+import Header from '../header'
 
 class Group extends Component {
 
@@ -25,6 +26,7 @@ class Group extends Component {
     console.log('group ', group);
     return (
       <div>
+        <Header groupId={ this.props.match.params.id } />
         <h1>Group</h1>
         {
           group && group.listProducts &&

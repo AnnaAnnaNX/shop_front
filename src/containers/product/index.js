@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { push } from 'connected-react-router'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import {
   fetchProduct
 } from '../../actions'
@@ -12,6 +12,7 @@ import {
   decrement,
   decrementAsync
 } from '../../modules/counter'
+import Header from '../header'
 
 class Product extends Component {
 
@@ -23,8 +24,10 @@ class Product extends Component {
     const { match, product } = this.props;
     console.log('match ', match);
     console.log('product ', product);
+    console.log('product && product.product && product.product.groupId ', product && product.product && product.product.groupId);
     return (
       <div>
+        <Header groupId={ product && product.product && product.product.groupId} />
         <h1>Product</h1>
         {
           product && product.product && (

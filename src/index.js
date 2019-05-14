@@ -19,7 +19,8 @@ import group from './reducers/group'
 import {
   setListLinks,
 	setProduct,
-	setProducts
+	setProducts,
+	setPathes
 } from './actions/index'
 
 // Sagas
@@ -27,6 +28,36 @@ function* watchFetchDog() {
 	yield takeEvery('FETCH_COUBS', fetchCoubs);
 	yield takeEvery('FETCH_PRODUCT', fetchProduct);
 	yield takeEvery('FETCH_PRODUCTS_BY_GROUPID', fetchProductsByGroupId);
+	yield takeEvery('GET_PATHES', getPathes);
+}
+
+function* getPathes() {
+	try {
+		console.log('getPathes')
+		const data = yield call(() => {
+				return axios.get(
+					`http://localhost:3000/api/ModelGroups/getPathes`,
+					{
+						crossDomain: true,
+						method: 'GET',
+						mode: 'no-cors',
+						headers: {
+							'Access-Control-Allow-Origin': '*',
+							'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE, OPTIONS',
+							'Access-Control-Allow-Headers': 'Content-Type, X-Auth-Token, Origin',
+							'Content-Type': 'application/json'
+						}
+					}
+				)
+			}
+		);
+		console.log('data ', data);
+		yield put(setPathes(data && data.data && data.data.pathes ));
+		// yield put(requestDogSuccess(data));
+	} catch (error) {
+		// yield put(requestDogError());
+		console.log('getPathes error')
+	}
 }
 
 function* fetchProductsByGroupId(payload) {
