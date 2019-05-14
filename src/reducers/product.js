@@ -1,6 +1,6 @@
 import { VisibilityFilters } from '../actions'
 
-const searchMusic = (state = {product: {}}, action) => {
+const product = (state = {product: {}}, action) => {
   switch (action.type) {
     case 'SET_PRODUCT':console.log('action SET_PRODUCT');
       return {
@@ -12,4 +12,4 @@ const searchMusic = (state = {product: {}}, action) => {
   }
 }
 
-export default searchMusic
+export default product

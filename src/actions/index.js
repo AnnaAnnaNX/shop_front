@@ -33,6 +33,11 @@ export const setProduct = (value) => ({
   payload: value
 })
 
+export const setProducts = (value) => ({
+  type: 'SET_PRODUCTS',
+  payload: value
+})
+
 
 // sagas
 
@@ -43,5 +48,10 @@ export const fetchCoubs = (text) => ({
 
 export const fetchProduct = (id) => ({
   type: 'FETCH_PRODUCT',
+  id: id
+})
+
+export const fetchProductsByGroupId = (id) => ({
+  type: 'FETCH_PRODUCTS_BY_GROUPID',
   id: id
 })

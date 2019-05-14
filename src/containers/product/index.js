@@ -12,7 +12,6 @@ import {
   decrement,
   decrementAsync
 } from '../../modules/counter'
-import { fetchCoubs } from '../../actions'
 
 class Product extends Component {
 

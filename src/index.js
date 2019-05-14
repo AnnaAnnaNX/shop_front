@@ -15,15 +15,47 @@ import { reducer as formReducer } from 'redux-form'
 import snackbar from './reducers/snackbar'
 import searchMusic from './reducers/searchMusic'
 import product from './reducers/product'
+import group from './reducers/group'
 import {
   setListLinks,
-	 setProduct
+	setProduct,
+	setProducts
 } from './actions/index'
 
 // Sagas
 function* watchFetchDog() {
 	yield takeEvery('FETCH_COUBS', fetchCoubs);
 	yield takeEvery('FETCH_PRODUCT', fetchProduct);
+	yield takeEvery('FETCH_PRODUCTS_BY_GROUPID', fetchProductsByGroupId);
+}
+
+function* fetchProductsByGroupId(payload) {
+	try {
+		console.log('fetchGroup id', payload.id)
+		const data = yield call(() => {
+				return axios.get(
+					`http://localhost:3000/api/ModelProducts/getAllProductsByGroupId?id=${payload.id}`,
+					{
+						crossDomain: true,
+						method: 'GET',
+						mode: 'no-cors',
+						headers: {
+							'Access-Control-Allow-Origin': '*',
+							'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE, OPTIONS',
+							'Access-Control-Allow-Headers': 'Content-Type, X-Auth-Token, Origin',
+							'Content-Type': 'application/json'
+						}
+					}
+				)
+			}
+		);
+		console.log('data ', data);
+		yield put(setProducts(data && data.data && data.data.products ));
+		// yield put(requestDogSuccess(data));
+	} catch (error) {
+		// yield put(requestDogError());
+		console.log('fetchProductsByGroupId error')
+	}
 }
 
 function* fetchProduct(payload) {
@@ -51,9 +83,10 @@ function* fetchProduct(payload) {
 		// yield put(requestDogSuccess(data));
 	} catch (error) {
 		// yield put(requestDogError());
-		console.log('fetchCoubs error')
+		console.log('fetchProduct error')
 	}
 }
+
 
 
 function* fetchCoubs(text) {
@@ -91,6 +124,7 @@ const rootReducer = combineReducers({
 	snackbar,
 	searchMusic,
 	product,
+	group,
   // ...your other reducers here
   // you have to pass formReducer under 'form' key,
   // for custom keys look up the docs for 'getFormState'
